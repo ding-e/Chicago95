@@ -29,8 +29,8 @@ the whisker menu without having to correct their pointer location. */
       border-radius: 0px; }
   #whiskermenu-button image,
   #applicationmenu-button image {
-    padding: 1px;
-    margin-right: -2px;
+    padding: 0px;
+    margin-right: -1px;
     background-repeat: no-repeat;
     background-size: contain;
     background-position: center; }
@@ -39,7 +39,7 @@ the whisker menu without having to correct their pointer location. */
     padding: 1px;
     border: none;
     color: black;
-    font-family: "MS Sans Serif Bold", Sans, Sans-Serif;
+    font-family: "Microsoft Sans Serif", Sans, Sans-Serif;
     font-weight: bold; }
 
 /****************

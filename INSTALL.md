@@ -17,6 +17,7 @@
     * [Launcher Button icon scaling](#button_scale) (*For legacy GTK2 panelbars only*)
     * [Thunar status indicator](#thunar)
     * [QT5 theme configration with qt5ct](#config_qt5ct)
+    * [Apply GTK theme for Flatpak applications](#flatpak_config)
     * [GTK Overlay Scrollbars](#gtk_scroll)
     * [Desktop Shadow effects](#desktop_shadow)
     * [Desktop background color](#desktop_color)
@@ -332,7 +333,7 @@ If you use a vertical deskbar, you could add a second row from the panel propert
 
 ### [ Thunar status indicator ] (for XFCE 4.14)
 
-The thunar status indicator can be modified on line 59 in `/home/$USER/.themes/Chicago95/gtk-3.24/apps/thunar.css`. Uncomment the code from line 53 to line 64.
+The thunar status indicator can be modified on line 59 in `/home/$USER/.themes/Chicago95/gtk-3.24/apps/thunar.css`. Uncomment the code from line 49 to line 60.
 
 You can replace `status_badge_c95.png` with four of the following images.
 
@@ -379,6 +380,31 @@ Once you are logged back into your desktop you can access `Qt5 Settings` (or run
 - In the Icon Theme tab you can select the Chicago95 icon theme here.
 - In the Fonts tab you can select the fonts to be used in QT applications. (Liberation Sans 8 for a general font looks nice.)
 - Click "Apply" to apply adjustments and OK to finish.
+
+[[Return to Index]](#index)
+
+<a name="flatpak_config"/>
+
+### [ Apply GTK theme for Flatpak applications ] (advanced)
+If you would like to enable theme support for appplications installed through Flatpak, then follow the below steps.
+
+#### Step 1:
+
+Permit Flatpak container applications file level access to the theme directory.
+
+    sudo flatpak override --filesystem=$HOME/.themes
+
+*Note: Flatpak black lists `/usr/share/themes` from being accessible period, so you'll have to install the Chicago95 theme somewhere else; ideally in `~/.themes`*
+
+#### Step 2:
+
+Enable the Chicago95 GTK theme for Flatpak container applications.
+
+    sudo flatpak override --env=GTK_THEME=Chicago95
+
+Now reload your Flatpak application to verify the theme change.
+
+Something else worth noting. If you copy the Chicago95 icon theme into `/usr/share/icons`, then your Flatpak applications will default to that icon theme so long it's enabled.
 
 [[Return to Index]](#index)
 
@@ -454,7 +480,32 @@ If these themes aren't enough and you'd like to personalize your icon theme down
 <a name="ms_sans_serif"/>
 
 ### [ MS Sans Serif font ]
-For an authentic Windows 95 feel, you can use the original MS Sans Serif font.  To do this, you will need a copy of both the "MS Sans Serif Regular" and "Microsoft Sans Serif Regular" fonts from the `C:\Windows\Fonts` directory of any modern Windows computer.  (The filenames for these fonts are `sserife.fon` and `micross.ttf` respectively)
+For an authentic Windows 95 feel, you can use the included cronyx-cyrillic Helvetica OTB font or the original MS Sans Serif font *(not included)*. You may encounter many issues with the original MS Sans Serif compared to the Helvetica font.
+
+#### Helvetica install
+To install the Helvetica font, you'll need to copy the "cronyx-cyrillic" folder from the `Fonts/` directory into either `~/.fonts` for only a user install or `/usr/share/fonts` for a system-wide install.
+
+    cp -r Chicago95-master/Fonts/cronyx-cyrillic ~/.fonts
+
+    cp -r Chicago95-master/Fonts/cronyx-cyrillic /usr/share/fonts
+
+By default, some systems block bitmap fonts. To enable this and other bitmap fonts, run the following command:
+
+    sudo mv /etc/fonts/conf.d/70-no-bitmaps.conf /etc/fonts/conf.d/70-no-bitmaps.conf.bak
+
+If you see "No such file or directory," then bitmap fonts were already enabled on your system.
+
+The name of the font is listed as "Helvetica" and so depending on distribution, it might conflict with Adobe's Helvetica font. Specifically, Debian lists both as Helvetica (Arch lists Adobe's font as "Adobe Helvetica" so there is no conflict). If, after installing this font, some programs show a different Helvetica font, the other font can be safely removed. To fix this for programs such as Firefox which still accept PCF and other legacy font formats, run the following command:
+
+    sudo rm /usr/share/fonts/X11/*dpi/helv*
+
+*Note: Do not uninstall xfonts-75dpi or xfonts-100dpi on Debian-based systems, as these are required by tasksel tasks.*
+
+There is some additional information about this font in the reported issue [ticket #218](https://github.com/grassmunk/Chicago95/issues/218).
+
+#### MS Sans Serif
+
+To do this, you will need a copy of both the "MS Sans Serif Regular" and "Microsoft Sans Serif Regular" fonts from the `C:\Windows\Fonts` directory of any modern Windows computer.  (The filenames for these fonts are `sserife.fon` and `micross.ttf` respectively)
 
 After copying over the files to your system, we now need to convert the `sserife.fon` file to a TrueType font using FontForge.  (This step is optional; you can still use MS Sans Serif, but bold fonts will not be available)
 
@@ -660,15 +711,21 @@ The cursors in the theme do not support HiDPI but [Hackneyed](https://www.gnome-
 
 To disable client side decorations for XFCE 4.16 applications, you can install the the [libxfce4ui-nocsd](https://github.com/Xfce-Classic/libxfce4ui-nocsd) fork. *(Note: This library primarily affects XFCE applications.)*
 
-For XUbuntu 21.04 users specifically:
+For XUbuntu 21.04 users:
 
+    sudo apt install libxfce4ui-nocsd-2-0
+
+For XUbuntu 21.10 users you will have to install the [XUbuntu QA Experimental PPA.](https://launchpad.net/~xubuntu-dev/+archive/ubuntu/experimental/)
+
+    sudo add-apt-repository ppa:xubuntu-dev/experimental
+    sudo apt update
     sudo apt install libxfce4ui-nocsd-2-0
 
 For Arch based platforms:
 
     pacman -S libxfce4ui-nocsd
 
-For other platforms, such as Debian 11 or non XUbuntu 21.04 flavours, you may have to build libxfce4ui-nocsd for yourself. You may also check the [Chicago95 OBS repo](https://software.opensuse.org//download.html?project=home%3Abgstack15%3AChicago95&package=chicago95-theme-all) to see if your platform is available.
+For other platforms, such as Debian 11 or non XUbuntu 21.04 flavours, you may have to build libxfce4ui-nocsd for yourself. 
 
 ### Step 2:
 

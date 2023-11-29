@@ -11,11 +11,15 @@
 
 /* Xfdesktop */
 XfdesktopIconView.view {
-  background: @xfd_icon_backdrop;
+  background-image: -gtk-gradient(linear, left top, right bottom, from (@xfd_icon_backdrop));
+  background-repeat: no-repeat;
+  background-position: 4px 4px;
+  background-size: calc(100% - 10px) calc(100% - 10px);
   color: @selected_bg_color;
-  border-radius: 0px; }
+  border-radius: 0px; 
+  background-color: rgba(0, 0, 0, 0)}
   XfdesktopIconView.view:active {
-    background: @selected_bg_color;
+    background-image: -gtk-gradient(linear, left top, right bottom, from (@selected_bg_color));
     text-shadow: none;
     color: shade(@selected_bg_color, 3.0); }
   XfdesktopIconView.view .label {
@@ -50,7 +54,7 @@ XfdesktopIconView.view {
     padding: 0px;
     border: none;
     box-shadow: none;
-    background-color: transparent; }
+    background-color: @bg_color; }
     #showdesktop-button:checked {
       border: 2px solid @border_dark;
       border-image: url("../buttons/button_pressed.png");
@@ -77,17 +81,17 @@ XfdesktopIconView.view {
     #xfce4-power-manager-plugin:hover,
     #xfce4-power-manager-plugin:active,
     #xfce4-power-manager-plugin:checked {
-      border-color: transparent;
+      border: none;
       box-shadow: none;
       /*color: @panel_fg_color_bright;*/ /*If you choose to add a background colour, don't forget to uncomment the colour property here so that symbolic icons are properly shaded. You can change the colour propery value to whatever you want. */
-      background-color: transparent; }   /* Adding a background colour to the following will highlight panel icons when hovered or checked if desired. */
+      background-color: @bg_color; }   /* Adding a background colour to the following will highlight panel icons when hovered or checked if desired. */
 
 /* Clock plugin */
 #clock-button {
-  border: 2px solid transparent;
+  border: 2px solid @bg_color;
   box-shadow: inset 1px 1px @border_shade, inset -1px -1px @border_bright;
   margin: 0px;
-  background-color: transparent; }
+  background-color: @bg_color; }
   #clock-button label {
     padding: 2px; }
 
@@ -111,12 +115,14 @@ wnck-pager {
     color: @text_bright }
 
 /* Plugin buttons */
+.xfce4-panel .vertical,
+.xfce4-panel .horizontal,
 .xfce4-panel .toggle {
   border: none;
   box-shadow: none;
   margin: 0px;
-  background-color: transparent; }
-
+  background-color: @bg_color; }
+/*  background-color: transparent; } */
 /* Tasklist */
 .tasklist .toggle {
   /* We remove borders and shadows for the '.tasklist' '.toggle' button 
@@ -130,7 +136,7 @@ wnck-pager {
   border: none;
   box-shadow: none;
   margin: 0px;
-  background-color: transparent; }
+  background-color: @bg_color; }
   .tasklist .toggle box {
     transition: 0s font-weight;
     margin: 2px;
@@ -174,7 +180,8 @@ wnck-pager {
 #xfce4-power-manager-plugin:checked {
   margin: 0px;
   box-shadow: none;
-  border: transparent; }
+  background-color: @bg_color;
+  border: none; }
   #xfce4-power-manager-plugin * {
     -gtk-icon-style: regular;
     -gtk-icon-transform: scale(1); }
@@ -185,7 +192,8 @@ wnck-pager {
   margin: 0px;
   padding: 2px;
   box-shadow: none;
-  border: transparent; }
+  background-color: @bg_color;
+  border: none; }
   #xfce4-notification-plugin * {
     -gtk-icon-transform: scale(1); }
 
@@ -194,7 +202,8 @@ wnck-pager {
 .xfce4-panel #pulseaudio-button:active {
   margin: 0px;
   box-shadow: none;
-  border: transparent; }
+  background-color: @bg_color;
+  border: none; }
 .xfce4-panel #pulseaudio-button * {
   -gtk-icon-transform: scale(1); }
 .xfce4-panel #pulseaudio-button menu .linked button {
@@ -223,15 +232,19 @@ wnck-pager {
 
 /* XFCE terminal */
 #xfce4-terminal-notebook overlay > box,
-#xfce4-terminal-notebook stack > box {
+#xfce4-terminal-notebook stack > box,
+#xfce4-terminal-notebook stack scrolledwindow {
   border: 2px solid @border_dark;
   border-image: url("../assets/frame_inset.png");
   border-image-slice: 2 2 2 2;
   box-shadow: none; }
   .fullscreen #xfce4-terminal-notebook overlay > box,
   .fullscreen #xfce4-terminal-notebook stack > box,
+  .fullscreen #xfce4-terminal-notebook stack scrolledwindow,
   .maximized #xfce4-terminal-notebook overlay > box,
-  .maximized #xfce4-terminal-notebook stack > box {
+  .maximized #xfce4-terminal-notebook stack > box,
+  .maximized #xfce4-terminal-notebook stack scrolledwindow {
+    margin: 0px;
     border: none;
     border-image: none;
     box-shadow: none; }
